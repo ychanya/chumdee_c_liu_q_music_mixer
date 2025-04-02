@@ -28,35 +28,29 @@
             <div
                 class="instruments bg-[#532D1D] w-[80px] h-[407px] rounded-[15px] space-y-[12px] justify-items-center content-center">
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="drums" src="images/drums_icon.png" alt="drum">
-                    <audio src="audio/drums"></audio>
+                    <img id="drums" src="images/drums_icon.png" alt="drum" draggable="true">
                 </div>
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="guitar" src="images/guitar_icon.png" alt="guitar">
-                    <audio src="audio/guitar"></audio>
+                    <img id="guitar" src="images/guitar_icon.png" alt="guitar" draggable="true">
                 </div>
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="strings" src="images/strings_icon.png" alt="string">
-                    <audio src="audio/strings"></audio>
+                    <img id="strings" src="images/strings_icon.png" alt="string" draggable="true">
                 </div>
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="piano_base" src="images/piano_base_icon.png" alt="piano base">
-                    <audio src="audio/piano_base"></audio>
+                    <img id="piano_base" src="images/piano_base_icon.png" alt="piano base" draggable="true">
                 </div>
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="piano_1" src="images/piano_1_icon.png" alt="piano 1">
-                    <audio src="audio/piano_1"></audio>
+                    <img id="piano_1" src="images/piano_1_icon.png" alt="piano 1" draggable="true">
                 </div>
                 <div class="instrument-icon bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]">
-                    <img data-trackref="piano_2" src="images/piano_2_icon.png" alt="piano 2">
-                    <audio src="audio/piano_2"></audio>
+                    <img id="piano_2" src="images/piano_2_icon.png" alt="piano 2" draggable="true">
                 </div>
             </div>
         </section>
 
-        <section class="flex flex-row space-x-[76px] mt-10 items-center">
+        <section id="mixer-board" class="flex flex-row space-x-[76px] mt-10 items-center">
             <div
-                class="mixer-board bg-[#532D1D] w-[407px] h-[80px] rounded-[15px] flex flex-row items-center justify-center space-x-[12px]">
+                class="bg-[#532D1D] w-[407px] h-[80px] rounded-[15px] flex flex-row items-center justify-center space-x-[12px]">
                 <div class="drop-zone bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]"></div>
                 <div class="drop-zone bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]"></div>
                 <div class="drop-zone bg-[#D0B4A9] w-[50px] h-[50px] rounded-[15px]"></div>
@@ -66,13 +60,13 @@
             </div>
             <div class="space-y-2">
                 <div class="bg-[#532D1D] w-[53px] h-[50px] rounded-[25px] flex items-center justify-center">
-                    <button class="bg-[#D0B4A9] w-[34px] h-[34px] rounded-[15px]">
-                        <img src="images/play-button.png" alt="play" id="playButton">
+                    <button id="playButton" class="bg-[#D0B4A9] w-[34px] h-[34px] rounded-[15px]">
+                        <img src="images/play.png" alt="play">
                     </button>
                 </div>
                 <div class="bg-[#532D1D] w-[53px] h-[50px] rounded-[25px] flex items-center justify-center">
-                    <button class="bg-[#D0B4A9] w-[34px] h-[34px] rounded-[15px]">
-                        <img src="images/reset.png" alt="reset" id="resetButton">
+                    <button id="resetButton" class="bg-[#D0B4A9] w-[34px] h-[34px] rounded-[15px]">
+                        <img src="images/reset.png" alt="reset">
                     </button>
                 </div>
             </div>
