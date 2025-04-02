@@ -1,9 +1,13 @@
 console.log("JS file connected");
-// ******* An interactive Svg section *******
 const recordPlayer = document.querySelector("#recordPlayer");
-const playButton = document.querySelector("#playButton");
+const dropZone = document.querySelectorAll('.drop-zone'); 
+const instruments = document.querySelectorAll('.instruments img');
+
 let isMusicPlaying = false;
 let vinylAngle = 0;
+let draggedPiece;
+
+// ******* An interactive Svg section *******
 
 function setupRecordPlayer() {
     const tonearm = recordPlayer.contentDocument.getElementById("Tone_arm");
@@ -11,31 +15,32 @@ function setupRecordPlayer() {
     tonearm.style.transformOrigin = "505px 95px";
 }
 
-function handleClickPlay(){
-    if(isMusicPlaying) {
-        pause();
-        return;
-    }
-    play();
-}
-
-function play(){
+function play(instrumentId){
     isMusicPlaying = true;
     insertMusicDisc();
-    changePlayButtonIcon("pause");
     setTimeout(() => { 
         moveTonearm(30);
         startSpinningVinyl();
+        playAudio(instrumentId);
 },700);
 }
 
-function pause(){
-    isMusicPlaying = false;
-    changePlayButtonIcon("play");
-    setTimeout(() => { 
-        removeMusicDisc();
-        moveTonearm(0);
-},400);
+function pause(instrumentId){
+    pauseAudio(instrumentId);
+    if (countInstrumentsInDropZone() === 0) {
+        isMusicPlaying = false;
+        setTimeout(() => { 
+            removeMusicDisc();
+            moveTonearm(0);
+    },400);
+    }
+}
+
+function countInstrumentsInDropZone() {
+    let count = 0;
+
+    dropZone.forEach((zone) => {count += zone.childElementCount;});
+    return count;
 }
 
 function insertMusicDisc() {
@@ -73,24 +78,7 @@ function spinVinyl() {
     requestAnimationFrame(spinVinyl);
 }
 
-function changePlayButtonIcon(icon) {
-    const playButtonIcon = playButton.querySelector("img");
-    playButtonIcon.src = `images/${icon}.png`;
-    playButtonIcon.alt = icon;
-}
-
-
-recordPlayer.addEventListener("load", setupRecordPlayer);
-playButton.addEventListener("click", handleClickPlay);
-
-
 // ******* Drag and drop instruments section *******
-const puzzleBoard = document.querySelector('.mixer-board');
-const dropZone = document.querySelectorAll('.drop-zone'); 
-const instrumentsContainer = document.querySelector('.instruments');
-const instruments = document.querySelectorAll('.instruments img');
-let draggedPiece;
-
 function handleStartDrag() {
     console.log('started dragging this piece: ', this);
     draggedPiece = this;
@@ -103,36 +91,49 @@ function handleDragOver(e) {
 
 function handleDrop(e){
     e.preventDefault();
-    if (this.children.length === 0) {
-        this.appendChild(draggedPiece);
-        console.log('dropped something on me');
-        playAudio(draggedPiece.id, this);
+    if (this.childElementCount > 0) {
+        return;
     }
+    this.appendChild(draggedPiece);
+        play(draggedPiece.id);
+        console.log('dropped something on me');
 }
 
-// !!!!!!!!!! Damn bugs
 function handleClickBack() {
     if (
         this.parentElement != null && this.parentElement.classList.contains("drop-zone")
     ) {
-        instrumentsContainer.appendChild(this);
+        const instrumentContainer = document.getElementById(`${this.id}_container`); 
+        instrumentContainer.appendChild(this);
+        pause(this.id);
         console.log('started clicking this piece back to the container: ', this);
     }
 }
-// !!!!!!!!!! Problem
-function playAudio (selectedInstrument, selectedDropZone) {
-    let instrument = document.createElement('audio');
-    instrument.src = `assets/${selectedInstrument}.mp3`;
-    instrument.load();
-    selectedDropZone.appendChild(instrument);
-    instrument.loop = true;
+
+function playAudio (instrumentId) {
+    let instrument = document.getElementById(`${instrumentId}_track`);
+    instrument.currentTime = 0;
     instrument.play();
 }
 
+function pauseAudio (instrumentId) {
+    let instrument = document.getElementById(`${instrumentId}_track`);
+    instrument.pause()
+}
+
+function resetting() {
+    location.reload();
+}
+
+
+// Add eventlistener
+document.querySelector("#resetButton").addEventListener("click",resetting);
+recordPlayer.addEventListener("load", setupRecordPlayer);
 instruments.forEach(icon => {
     icon.addEventListener('dragstart', handleStartDrag);
     icon.addEventListener('click', handleClickBack);
 });
-
-dropZone.forEach(zone => zone.addEventListener('dragover', handleDragOver));
-dropZone.forEach(zone => zone.addEventListener('drop',handleDrop));
+dropZone.forEach(zone => {
+    zone.addEventListener('dragover', handleDragOver);
+    zone.addEventListener('drop',handleDrop);
+})
