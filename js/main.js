@@ -10,7 +10,7 @@ let draggedPiece;
 // ******* An interactive Svg section *******
 
 function setupRecordPlayer() {
-    const tonearm = recordPlayer.contentDocument.getElementById("Tone_arm");
+    const tonearm = recordPlayer.contentDocument.querySelector("#Tone_arm");
     tonearm.style.transition = "transform 0.5s ease";
     tonearm.style.transformOrigin = "505px 95px";
 }
@@ -58,7 +58,7 @@ function removeMusicDisc() {
 }
 
 function moveTonearm(angle) {
-    const tonearm = recordPlayer.contentDocument.getElementById("Tone_arm");
+    const tonearm = recordPlayer.contentDocument.querySelector("#Tone_arm");
     tonearm.style.transform = `rotate(${angle}deg)`;
 }
 
@@ -71,7 +71,7 @@ function startSpinningVinyl() {
 function spinVinyl() {
     if (!isMusicPlaying) return;
 
-    const vinyl = recordPlayer.contentDocument.getElementById("Vinyl");
+    const vinyl = recordPlayer.contentDocument.querySelector("#Vinyl");
     vinylAngle += 1;
     vinyl.setAttribute("transform", `rotate(${vinylAngle} 250 225)`);
 
@@ -103,7 +103,7 @@ function handleClickBack() {
     if (
         this.parentElement != null && this.parentElement.classList.contains("drop-zone")
     ) {
-        const instrumentContainer = document.getElementById(`${this.id}_container`); 
+        const instrumentContainer = document.querySelector(`#${this.id}_container`); 
         instrumentContainer.appendChild(this);
         pause(this.id);
         console.log('started clicking this piece back to the container: ', this);
@@ -111,13 +111,13 @@ function handleClickBack() {
 }
 
 function playAudio (instrumentId) {
-    let instrument = document.getElementById(`${instrumentId}_track`);
+    let instrument = document.querySelector(`#${instrumentId}_track`);
     instrument.currentTime = 0;
     instrument.play();
 }
 
 function pauseAudio (instrumentId) {
-    let instrument = document.getElementById(`${instrumentId}_track`);
+    let instrument = document.querySelector(`#${instrumentId}_track`);
     instrument.pause()
 }
 
